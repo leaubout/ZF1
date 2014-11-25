@@ -18,7 +18,7 @@ class Model_Mapper_User
         foreach($rowSet as $row){
             $entities[] = $this->rowToObject($row);
         }
-        return entities;
+        return $entities;
     }
     
     public function delete($id)

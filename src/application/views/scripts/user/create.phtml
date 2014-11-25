@@ -1,0 +1,31 @@
+<?php $this->headLink()->appendStylesheet("/css/zf.css");?>
+<div id="welcome">
+	<form role="form" method="post" action=/user/save>
+		<fieldset>
+
+			<!-- Form Name -->
+			<legend>Saisie d'un nouvel utilisateur</legend>
+			
+			<!-- Text input-->
+			<div class="form-group">
+				<label for="name">Nom</label>
+                <input id="name" name="name" type="text" class="form-control">
+			</div>
+
+			<!-- Password input-->
+			<div class="form-group">
+				<label for="password">Mot de passe</label>
+                <input id="password" name="password" type="password" class="form-control">
+			</div>
+
+			<!-- Button (Double) -->
+			<div class="form-group">
+				<label for="save"></label>
+				<button id="save" name="save" class="btn btn-success">Enregistrer</button>
+				<button id="reset" name="reset" class="btn btn-danger">Réinitialiser</button>
+			</div>
+
+		</fieldset>
+	</form>
+
+</div>
