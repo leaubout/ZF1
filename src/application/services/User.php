@@ -19,8 +19,8 @@ class Service_User
                     ->getResource('cachemanager')
                     ->getCache('data1');
         if (!$user = $cache->load('user' . $id)){
-            var_dump('pas cache');
             $user = $this->getUserMapper()->find($id);
+            $cache->save($user);
         }
         return $user;
     }

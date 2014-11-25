@@ -26,7 +26,7 @@ class IndexController extends Zend_Controller_Action
     }
 
     public function testredirectAction(){
-        $this->flashMessenger->addMessage('Redirection effectu�e');
+        $this->flashMessenger->addMessage('Redirection effectuée');
         
         $redirector = $this->_helper->getHelper('Redirector');
         $redirector->setCode(301)
