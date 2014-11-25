@@ -1,0 +1,98 @@
+<?= $this->doctype() . PHP_EOL; ?>
+<html>
+    <head>
+        <?php
+            $this->headTitle('Mon appli')->setSeparator(' - ');
+            $this->headTitle()->setSeparator('.');
+            echo $this->headTitle() . PHP_EOL;
+            
+            $this->headMeta()->appendName('viewport', 'width=device-width initial-scale=1');
+            
+            echo $this->headMeta() . PHP_EOL;
+            
+            $this->headLink()->prependStylesheet("/assets/bootstrap/dist/css/bootstrap.min.css");
+            $this->headLink()->appendStylesheet("/css/main.css");
+            echo $this->headLink() . PHP_EOL; 
+            
+            echo $this->headStyle() . PHP_EOL;
+            
+            echo $this->headScript() . PHP_EOL;
+        ?>
+    </head>
+    <body>
+    	<div class="row affix-row">
+    		<div class="col-sm-3 col-md-2 affix-sidebar">
+    			<div class="sidebar-nav">
+    				<div class="navbar navbar-default" role="navigation">
+    					<div class="navbar-header">
+    						<button type="button" class="navbar-toggle" data-toggle="collapse"
+    							data-target=".sidebar-navbar-collapse">
+    							<span class="sr-only">Toggle navigation</span> <span
+    								class="icon-bar"></span> <span class="icon-bar"></span> <span
+    								class="icon-bar"></span>
+    						</button>
+    						<span class="visible-xs navbar-brand">Sidebar menu</span>
+    					</div><!--/.nav-header -->
+    					<div class="navbar-collapse collapse sidebar-navbar-collapse">
+    						<ul class="nav navbar-nav" id="sidenav01">
+    							<li class="active">
+    							    <a href="#" data-toggle="collapse"
+                                        data-target="#toggleDemo0" data-parent="#sidenav01"
+    								    class="collapsed">
+    									<h4>My MVC</h4>
+    							    </a>
+                                    <div class="collapse" id="toggleDemo0" style="height: 0px;">
+    								    <ul class="nav nav-list">
+    										<li><a href="#">ProfileSubMenu1</a></li>
+    										<li><a href="#">ProfileSubMenu2</a></li>
+    										<li><a href="#">ProfileSubMenu3</a></li>
+    									</ul>
+    								</div>
+                                </li>
+    							<li>
+    							     <a href="#" data-toggle="collapse" data-target="#toggleDemo"
+    								    data-parent="#sidenav01" class="collapsed"> 
+    								    <span class="glyphicon glyphicon-cloud"></span> 
+    								    Accueil 
+    								    <span class="caret pull-right"></span>
+    							     </a>
+    							</li>
+    							<li>
+    							     <a href="/" data-toggle="collapse" data-target="#toggleDemo2" 
+    							         data-parent="#sidenav01" class="collapsed"> 
+    								    <span class="glyphicon glyphicon-inbox"></span>
+    									Index 
+    									<span class="caret pull-right"></span>
+    							     </a>
+    							</li>
+    							<li>
+    							     <a href="<?= $this->url(array(), 'indexTest') ?>">
+    							         <span class="glyphicon glyphicon-lock"></span> 
+    							         Test
+    							         <span class="caret pull-right"></span>
+    							     </a>
+                                </li>
+    						</ul>
+    					</div><!--/.nav-collapse -->
+    				</div><!--/.navbar navbar-default -->
+    			</div><!--/.sidebar-nav -->
+    		</div>
+    
+    		<div class="col-sm-9 col-md-10 affix-content">
+    			<div class="container">
+    				<div class="page-header">
+                      <?= $this->layout()->content?>
+                    </div>
+    			</div>
+    		</div>
+    	</div> <!-- <div class="row affix-row"> -->
+	
+	   <?php 
+	    $this->inlineScript()->prependFile("/assets/bootstrap/dist/js/bootstrap.min.js");
+	    $this->inlineScript()->prependFile("/assets/jquery/dist/jquery.min.js");
+	    
+	    echo $this->inlineScript() . PHP_EOL; ?> 
+
+
+	</body>
+</html>
