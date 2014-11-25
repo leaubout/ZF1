@@ -1,0 +1,17 @@
+{
+  "name": "ZF1",
+  "version": "0.0.1",
+  "main": "src/public/index.php",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.1",
+    "bootstrap": "~3.3.1"
+  }
+}

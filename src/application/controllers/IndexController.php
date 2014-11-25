@@ -32,7 +32,6 @@ class IndexController extends Zend_Controller_Action
         $redirector->setCode(301)
                     ->setExit(true)
                     ->setGotoRoute(array(), 'indexTest');
-    }
-    
+    }    
 }
 

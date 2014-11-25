@@ -1,0 +1,7 @@
+/.settings/
+/.vagrant/
+/vendor/
+/.buildpath
+/.project
+/.zfproject.xml
+/composer.lock

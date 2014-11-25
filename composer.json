@@ -1,0 +1,11 @@
+{
+  "name" : "ZF1",
+  "version" : "0.0.1",
+  "require" : {
+    "zendframework/zendframework1" : "=1.12.9"
+  },
+  "repositories" : [ {
+    "type" : "composer",
+    "url" : "https://packagist.org/"
+  } ]
+}
