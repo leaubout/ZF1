@@ -6,57 +6,100 @@ class UserController extends Zend_Controller_Action
     
     public function init()
     {
+        $this->flashMessenger = $this->_helper->getHelper('FlashMessenger');
         $this->userApi = new Service_User();
+        $this->view->messages = $this->flashMessenger->getMessages();
     }
     
-    public function readAction()
+    public function listAction()
     {
+        $this->view->headTitle("Liste des utilisateurs");
         $this->view->users = $this->userApi->fetchAll();
     }
     
-    public function createAction()
+    public function addAction()
     {
+        $form = new Form_User_Add();
+        if ($this->getRequest()->isPost()) {
+            if ($form->isValid($this->getRequest()->getPost())) {
+                $user = new Model_User();
+                $user->setName($form->getValue('name'));
+                $user->setPassword($form->getValue('pass'));
+                if ($this->userApi->save($user)) {
+                    $this->flashMessenger->addMessage('Utilisateur créé');
+                    //$this->redirect($this->view->url(array(),'userList'));
+                    $redirector = $this->_helper->getHelper('Redirector');
+                    $redirector->setCode(302)
+                        ->setExit(true)
+                        ->setGotoRoute(array(), 'userList');
+                } else {
+                    $this->flashMessenger->addMessage('La création a échoué :');
+                }
+            }
+        }
+        $this->view->form = $form;        
     }
     
-    public function updateAction()
+    public function editAction()
     {
-        $id = $this->_request->getQuery('id');
+        $id = (int) $this->getRequest()->getParam('id');
         $user = $this->userApi->find($id);
-        $this->view->user = $user;
+        
+        if (!$user) {
+            $this->flashMessenger->addMessage('Utilisateur inexistant');
+            $redirector = $this->_helper->getHelper('Redirector');
+            $redirector->setCode(302)
+            ->setExit(true)
+            ->setGotoRoute(array(), 'userList');
+        }
+        
+        $form = new Form_User_Edit();
+        
+        if ($this->getRequest()->isPost()) {
+            $data = $this->getRequest()->getPost();
+            foreach($data as $key=>$value){
+                if (empty($value)){
+                    $data[$key] = null;
+                }
+            }
+            if ($form->isValidPartial($data)) {
+                //$user récupéré ci-dessus
+                $user->setName($form->getValue('name'));
+                if ($form->getValue('pass') !== null){
+                    $user->setPassword($form->getValue('pass'));
+                }
+                if ($this->userApi->save($user)) {
+                    $this->flashMessenger->addMessage('Utilisateur créé');
+                    $redirector = $this->_helper->getHelper('Redirector');
+                    $redirector->setCode(302)
+                    ->setExit(true)
+                    ->setGotoRoute(array(), 'userList');
+                } else {
+                    $this->flashMessenger->addMessage('La création a échoué :');
+                }                
+            }
+        } else {
+            $form->populate(array(
+                'id' => $user->getId(),
+                'name' => $user->getName(),
+                'pass' => $user->getPassword()
+            ));
+        }
+        $this->view->form = $form;
     }
     
     public function deleteAction()
     {
-        $id = $this->_request->getQuery('id');
-        $user = $this->userApi->find($id);
-        if (isset($user)){
-            $this->userApi->delete($id);
+        $id = (int) $this->getRequest()->getParam('id');
+        if ($this->userApi->delete($id)) {
+            $this->flashMessenger->addMessage('Utilisateur supprimé');
+        } else {
+            $this->flashMessenger->addMessage('La suppression a échoué');
         }
-        /*
         $redirector = $this->_helper->getHelper('Redirector');
-        $redirector->setCode(301)
+        $redirector->setCode(302)
         ->setExit(true)
-        ->setGotoRoute(array(), 'userRead');
-        */
+        ->setGotoRoute(array(), 'userList');
     }
     
-    public function saveAction()
-    {
-        $id = $this->_request->getPost('id');
-        $name = $this->_request->getPost('name');
-        $password = $this->_request->getPost('password');
-        $user = new Model_User();
-        if (isset($id)){
-            $user->setId($id);
-        }
-        $user->setName($name);
-        $user->setPassword($password);
-        
-        $this->userApi->save($user);
-        
-        $redirector = $this->_helper->getHelper('Redirector');
-        $redirector->setCode(301)
-            ->setExit(true)
-            ->setGotoRoute(array(), 'userRead');        
-    }
 }

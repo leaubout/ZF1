@@ -35,10 +35,10 @@ class Model_Mapper_User
         $row = $this->objectToRow($user);
         if ((int) $user->getId() === 0){
             unset($row['user_id']);
-            $this->getDbTable()->insert($row);
+            return $this->getDbTable()->insert($row);
         }else{
             $where = array('user_id' => $user->getId());
-            $this->getDbTable()->update($row, $where);
+            return $this->getDbTable()->update($row, $where);
         }
     }
     
